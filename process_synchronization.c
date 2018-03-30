@@ -4,10 +4,12 @@
 
 struct process
 {
-
+  int process;
+  int burst_time;
+  int priority;
 };
 
 int main()
 {
-
+  
 }
