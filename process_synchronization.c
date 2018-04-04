@@ -8,7 +8,7 @@ struct process
 	int wt;
 };
 
-void RR(struct process prc, int tq , int i)
+void RR(struct process *prc, int tq , int i)
 {
 	int t = 0;
 		while(prc[i].rem_burst_time > 0)
@@ -42,10 +42,10 @@ void RR(struct process prc, int tq , int i)
 				}
 		}
 		if(queue == 2)
-		break;
+		return;
 }
 
-void PS(struct process prc , int i)
+void PS(struct process *prc , int i)
 {
 	int t = 0;
 	while(prc[i].rem_burst_time > 0)
@@ -70,7 +70,7 @@ void PS(struct process prc , int i)
 		}
 	}
 }
-void FCFS(struct process prc , int i)
+void FCFS(struct process *prc , int i)
 {
 	int t = 0;
 	while(prc[i].rem_burst_time > 0)
@@ -97,11 +97,9 @@ void FCFS(struct process prc , int i)
 	 
 }
 
-
-
 int main()
 {
-	int i, j, n, k,l,cnt = 0;
+	int i, j, n,sum = 0, twt = 0, f ;
 	int prq[3][2];
 	printf("Enter range of priority of queues:\n");
 	for(i = 0; i< 3; i++)
@@ -113,7 +111,7 @@ int main()
 	printf("\nEnter total number of process:");
 	scanf("%d", &n);
 	
-	struct process p[n];
+	struct process *p;
 	printf("Enter process's priority and burst time:\n");
 	for(i = 0; i < n; i++ )
 	{
@@ -135,27 +133,31 @@ int main()
 		else
 		queue = 3;
 
-	int  k =0 , l = 0;			
+	int  k = 0 , l = 0, m = 0;			
 			while(1)
 			{		
 				k = k%3;
 				l = l%3;
-				if(p[k].rem_burst_time >= prq[k][l] &&  p[k].rem_burst_time <= prq[k][l+1] && queue == 1)
+				m = m %n;
+				if(p[m].rem_burst_time >= prq[k][l] &&  p[k].rem_burst_time <= prq[k][l+1] && queue == 1)
 				{
 					
-					RR(p[k], 4, k);
+					RR(&p, 4, m);
 				}
-				if(p[k].rem_burst_time >= prq[k][l] &&  p[k].rem_burst_time <= prq[k][l+1] && queue == 2)
+				if(p[m].rem_burst_time >= prq[k][l] &&  p[k].rem_burst_time <= prq[k][l+1] && queue == 2)
 				{
 					
-					PS(p[k] );
+					PS(&p,m );
 					
 				}
-				if(p[k].rem_burst_time >= prq[k][l] &&  p[k].rem_burst_time <= prq[k][l+1] && queue == 3)
+				if(p[m].rem_burst_time >= prq[k][l] &&  p[k].rem_burst_time <= prq[k][l+1] && queue == 3)
 				{
-					FCFS(p[k]);
+					FCFS(&p,m);
 				}
 				
+				k++;
+				l++;
+				m++;
 				for(f = 0 ;f < n;f++)
 				{
 					sum = sum + p[f].rem_burst_time;
