@@ -133,7 +133,7 @@ int main()
 		else
 		queue = 3;
 
-	int  k = 0 , l = 0, m = 0;			
+	int  k = 0 , l = 0;			
 			while(1)
 			{		
 				k = k%3;
